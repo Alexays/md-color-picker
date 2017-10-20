@@ -4,7 +4,7 @@
 import { MDCRipple, MDCRippleFoundation, util } from '@material/ripple';
 import colors from 'material-colors/dist/colors'
 import EventEmitter from 'wolfy87-eventemitter'
-import { Grid } from './Picker/Grid'
+import { Grid } from './Picker/Grid/index.jsx'
 import icon from './icons/paint.svg'
 import { Option } from 'space-lift'
 import _omit from 'lodash.omit'
@@ -49,7 +49,7 @@ const extract = (object: Object): string[][] =>
 
 export const MdColorPicker = (config: ColorPickerConfig): EventEmitter => {
 
-    const {elementName, createIcon, defaultColor} = config
+    const { elementName, createIcon, defaultColor } = config
     const ee = new EventEmitter()
 
     const element: Optional<HTMLElement> = Option(document.getElementById(elementName));
@@ -64,31 +64,31 @@ export const MdColorPicker = (config: ColorPickerConfig): EventEmitter => {
     container.setAttribute("class", "color-container")
 
     const toggle = (force) => {
-        if (container.getAttribute("class") === "color-container" && force!==false)
+        if (container.getAttribute("class") === "color-container" && force !== false)
             container.setAttribute("class", "color-container-open")
         else
             container.setAttribute("class", "color-container")
         return false
     }
-    Grid(container, materialNoAccent,ee)
-    
-    const hideOnBlur =  (element: HTMLElement)=>{
-        element.addEventListener("blur",(event)=>{
+    Grid(container, materialNoAccent, ee)
+
+    const hideOnBlur = (element: HTMLElement) => {
+        element.addEventListener("blur", (event) => {
             toggle(false)
         })
     }
-    
+
     const props: Props = {
         container, defaultColor, ee,
         element, hideOnBlur, toggle
     }
 
-    if(createIcon)
+    if (createIcon)
         createWithIcon(props)
     else
         create(props)
-       
-    ee.on("grid_closed",toggle)
+
+    ee.on("grid_closed", toggle)
     return ee
 }
 
@@ -98,18 +98,18 @@ const createWithIcon = (props: Props): void => {
     image.innerHTML = icon
     image.setAttribute("class", "round-btn mdc-elevation--z1")
     const ripple = new MDCRipple(image)
-    image.addEventListener("click",toggle)
+    image.addEventListener("click", toggle)
 
     Option(image.firstElementChild).fold(
         () => console.error("Something went wrong creating the color-picker"),
         (child: SVGSVGElement) => {
 
             child.style.fill = defaultColor
-             ee.on("color-changed",(color)=>{
+            ee.on("color-changed", (color) => {
                 child.style.fill = color;
                 return false
             })
-    
+
         }
     )
 
@@ -118,13 +118,13 @@ const createWithIcon = (props: Props): void => {
      * is a div
      */
     element.fold(
-        ()=> console.error("Given element does not exists"),
-        (elem: HTMLDivElement) =>  {
+        () => console.error("Given element does not exists"),
+        (elem: HTMLDivElement) => {
             hideOnBlur(elem)
             elem.appendChild(image)
             elem.appendChild(container)
         }
-    )    
+    )
 }
 /*
     We don't have to create an icon, so we assume that the color piker will be 
@@ -133,20 +133,20 @@ const createWithIcon = (props: Props): void => {
 const create = (props: Props): void => {
     const { defaultColor, element, toggle, ee, container, hideOnBlur } = props
     element.fold(
-        ()=>console.error("An error occured locating base element"),
-        (elem: HTMLInputElement)=>{
+        () => console.error("An error occured locating base element"),
+        (elem: HTMLInputElement) => {
             Option(elem.parentElement)
-            .fold(
-                ()=> console.error("An error occured when creating the color-picker"),
+                .fold(
+                () => console.error("An error occured when creating the color-picker"),
                 (parent: HTMLElement) => {
                     parent.appendChild(container)
-                    elem.addEventListener("click",toggle)
+                    elem.addEventListener("click", toggle)
                     hideOnBlur(elem)
                 }
-            )
-    })
+                )
+        })
 }
 
 export default MdColorPicker
-if(window)
+if (window)
     window["MdColorPicker"] = MdColorPicker

@@ -6,12 +6,12 @@ const BabiliPlugin = require("babili-webpack-plugin");
 
 module.exports = {
   entry: [
-    APP_DIR + '/index.js'
+    APP_DIR + '/index.jsx'
   ],
   devtool: 'source-map',
   output: {
     path: BUILD_DIR,
-    filename: 'MdColorPicker.js',
+    filename: 'MdColorPicker.jsx',
     library: 'MdColorPicker',
     libraryTarget: 'umd',
     umdNamedDefine: true
@@ -21,7 +21,7 @@ module.exports = {
   },
   module: {
     loaders: [{
-      test: /\.js$/,
+      test: /\.jsx$/,
       include: [MODULE_DIR, APP_DIR],
       use: [
         'babel-loader',
