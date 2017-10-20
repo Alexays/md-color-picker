@@ -1,7 +1,6 @@
 let path = require('path');
 let BUILD_DIR = path.resolve(__dirname, 'lib');
 let APP_DIR = path.resolve(__dirname, 'src');
-let MODULE_DIR = path.resolve(__dirname, 'node_modules/@material');
 const BabiliPlugin = require("babili-webpack-plugin");
 
 module.exports = {
@@ -22,10 +21,12 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx$/,
-      include: [MODULE_DIR, APP_DIR],
-      use: [
-        'babel-loader',
-      ],
+      exclude: [/node_modules/],
+      include: [APP_DIR],
+      loader: 'babel-loader',
+      options: {
+        presets: ['es2015']
+      }
     }, {
       test: /\.scss$/,
       use: [{
