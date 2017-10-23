@@ -4,7 +4,7 @@
 import { MDCRipple, MDCRippleFoundation, util } from '@material/ripple';
 import colors from 'material-colors/dist/colors'
 import EventEmitter from 'wolfy87-eventemitter'
-import { Grid } from './Picker/Grid/index.jsx'
+import { Grid } from './Picker/Grid/index.js'
 import icon from './icons/paint.svg'
 import { Option } from 'space-lift'
 import _omit from 'lodash.omit'

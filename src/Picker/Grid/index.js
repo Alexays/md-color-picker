@@ -2,7 +2,7 @@
 /* @flow-runtime */
 
 "use strict"
-import { Line } from '../Line/index.jsx'
+import { Line } from '../Line/index.js'
 import EventEmitter from 'wolfy87-eventemitter'
 
 

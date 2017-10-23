@@ -1,7 +1,7 @@
 /* @flow         */
 /* @flow-runtime */
 
-import { Square } from '../Square/index.jsx'
+import { Square } from '../Square/index.js'
 import EventEmitter from 'wolfy87-eventemitter'
 
 /**

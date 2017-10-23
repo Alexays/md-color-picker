@@ -1,16 +1,17 @@
 let path = require('path');
+const webpack = require('webpack');
 let BUILD_DIR = path.resolve(__dirname, 'lib');
 let APP_DIR = path.resolve(__dirname, 'src');
-const BabiliPlugin = require("babili-webpack-plugin");
 
 module.exports = {
   entry: [
-    APP_DIR + '/index.jsx'
+    APP_DIR + '/index.js'
   ],
+  resolve: { extensions: ['.ts', '.js', '.json', '.css', '.scss', '.less', '.html'] },
   devtool: 'source-map',
   output: {
     path: BUILD_DIR,
-    filename: 'MdColorPicker.jsx',
+    filename: 'MdColorPicker.js',
     library: 'MdColorPicker',
     libraryTarget: 'umd',
     umdNamedDefine: true
@@ -20,9 +21,8 @@ module.exports = {
   },
   module: {
     loaders: [{
-      test: /\.jsx$/,
-      exclude: [/node_modules/],
-      include: [APP_DIR],
+      test: /\.js$/,
+      exclude: /node_modules\/(?!(@material)\/).*/,
       loader: 'babel-loader',
       options: {
         presets: ['es2015']
@@ -47,6 +47,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new BabiliPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({ sourceMap: true, mangle: { keep_fnames: true } }),
   ]
 }
