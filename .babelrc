@@ -1,7 +1,7 @@
 {
-  "presets": ["es2015","flow","stage-2"],
-  "plugins": ["babel-plugin-add-module-exports",["flow-runtime", {
-      "assert": true,
-      "annotate": true
-    }]]
+  "presets": [
+    "es2015",
+    "flow",
+    "stage-2"
+  ]
 }

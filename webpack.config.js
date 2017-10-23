@@ -8,16 +8,12 @@ module.exports = {
     APP_DIR + '/index.js'
   ],
   resolve: { extensions: ['.ts', '.js', '.json', '.css', '.scss', '.less', '.html'] },
-  devtool: 'source-map',
   output: {
     path: BUILD_DIR,
     filename: 'MdColorPicker.js',
     library: 'MdColorPicker',
     libraryTarget: 'umd',
     umdNamedDefine: true
-  },
-  stats: {
-    warnings: false,
   },
   module: {
     loaders: [{
@@ -47,7 +43,5 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.NoErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ sourceMap: true, mangle: { keep_fnames: true } }),
   ]
 }
